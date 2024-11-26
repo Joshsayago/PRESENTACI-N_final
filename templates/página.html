@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Tareas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        form input, form select, form button {
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px);
+        }
+
+        form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #e7e9eb;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #a71d2a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Tareas</h1>
+        <form action="/add_tarea" method="POST">
+            <input type="text" name="actividad" placeholder="Nueva actividad" required>
+            <select name="categoria" required>
+                <option value="" disabled selected>Selecciona una categoría</option>
+                <option value="Trabajo">Trabajo</option>
+                <option value="Personal">Personal</option>
+                <option value="Estudio">Estudio</option>
+            </select>
+            <button type="submit">Agregar Tarea</button>
+        </form>
+        <ul>
+            {% for tarea in tareas %}
+            <li>
+                <span>{{ tarea.actividad }} - <strong>{{ tarea.categoria }}</strong></span>
+                <form action="/delete_tarea" method="POST" style="margin: 0;">
+                    <input type="hidden" name="actividad" value="{{ tarea.actividad }}">
+                    <button type="submit" class="delete-btn">Eliminar</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
